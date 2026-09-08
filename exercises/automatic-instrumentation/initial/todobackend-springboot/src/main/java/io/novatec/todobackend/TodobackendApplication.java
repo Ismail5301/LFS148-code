@@ -13,6 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.*;
 
+import io.opentelemetry.instrumentation.annotations.SpanAttribute;
+import io.opentelemetry.instrumentation.annotations.WithSpan;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
@@ -77,8 +80,8 @@ public class TodobackendApplication {
 		return todo;
 
 	}
-
-	String someInternalMethod(String todo){
+	@WithSpan String
+	someInternalMethod(@SpanAttribute String todo){
 
 		todoRepository.save(new Todo(todo));
 		if(todo.equals("slow")){
